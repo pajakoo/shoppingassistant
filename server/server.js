@@ -15,6 +15,7 @@ import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 import React from 'react'
 import serialize from 'serialize-javascript'
+import {Servers} from '../Utils/Constants'
 
 
 import mongoose from 'mongoose'
@@ -43,18 +44,26 @@ var httpsServer = https.createServer(credentials, app);
 app.use(express.static(path.join(__dirname, '..', 'dist')))
 
 
-app.get('/get/all', (request, response) => {
+app.get('/users/get/all', (request, response) => {
   testModel.find((err,test) => {
     response.send(test)
   })
 })
 
 
-app.get('/save/:name', (request, response) => {
+app.get('/users/save/:name', (request, response) => {
 
   let { name } = request.params
   new testModel({name}).save((err,saveTest) => {
       response.send(saveTest)
+  })
+})
+
+app.get('/users/delete/:name', (request, response) => {
+
+  let { name } = request.params
+  new testModel({name}).delete((err, deleteTest) => {
+      response.send(deleteTest)
   })
 })
 
@@ -131,13 +140,13 @@ app.use((req, res) => {
   })
 })
 
-app.listen('8080', '10.10.0.119', function (err) {
+app.listen(process.env.PORT, Servers.API_SERVER_WEB, function (err) {
   if (err) {
     console.log(err)
     return
   }
 
-  console.log(`Listening at http://localhost:${process.env.PORT}`)
+  console.log(`Listening at ${Servers.API_SERVER_WEB}:${process.env.PORT}`)
 })
 
 

@@ -21,7 +21,7 @@
     "dev-server": {
       "command": "nodemon server/index.js",
       "env": {
-        "PORT": 3000
+        "PORT": 8080
       }
     },
     "hot-server": {

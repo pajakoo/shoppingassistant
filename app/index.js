@@ -56,6 +56,8 @@ if (module.hot) {
       renderError(error)
     }
   }
+
+
   module.hot.accept('./app', () => {
     setTimeout(render)
   })

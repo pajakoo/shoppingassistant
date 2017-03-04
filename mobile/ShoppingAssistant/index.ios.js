@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import api from './Utils/api'
+import FBSDK from 'react-native-fbsdk';
 
 import {
   AppRegistry,
@@ -17,11 +18,9 @@ import {
 
 
 
-
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class ShoppingAssistant extends Component {
-
 
   constructor(){
     super();
@@ -67,6 +66,7 @@ export default class ShoppingAssistant extends Component {
 
     );
   }
+
 }
 
 const styles = StyleSheet.create({

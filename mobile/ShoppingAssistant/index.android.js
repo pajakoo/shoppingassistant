@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import api from './Utils/api'
+import FBSDK from 'react-native-fbsdk';
 
 import {
   AppRegistry,
@@ -14,6 +15,11 @@ import {
   View,
   ListView
 } from 'react-native';
+
+
+const {
+  LoginButton,
+} = FBSDK;
 
 
 
@@ -49,20 +55,20 @@ export default class ShoppingAssistant extends Component {
 
     return (
       <View style={{flex:1}}>
-        <ListView
-          style={styles.list}
-          enableEmptySections={true}
-          dataSource={this.state.dataSource}
-          renderRow={ (rowData) =>
-            <Text
-              style={styles.text}
-            >{rowData.name}</Text>
+        <LoginButton
+          publishPermissions={["publish_actions"]}
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                alert("Login failed with error: " + result.error);
+              } else if (result.isCancelled) {
+                alert("Login was cancelled");
+              } else {
+                alert("Login was successful with permissions: " + result.grantedPermissions)
+              }
+            }
           }
-        />
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+          onLogoutFinished={() => alert("User logged out")}/>
       </View>
 
     );
